@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="chrome://autotaggingextension/skin/overlay.css" type="text/css"?>
+<!DOCTYPE overlay SYSTEM "chrome://autotaggingextension/locale/autotaggingextension.dtd">
+<overlay id="autotaggingextension-overlay"
+         xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+  <script src="overlay.js"/>
+  <script src="openAutoTagging.js"/>
+  <stringbundleset id="stringbundleset">
+    <stringbundle id="autotaggingextension-strings" src="chrome://autotaggingextension/locale/autotaggingextension.properties"/>
+  </stringbundleset>
+
+  <menupopup id="menu_ToolsPopup">
+    <menuitem id="autotaggingextension-hello" label="&autotaggingextension.label;" 
+              oncommand="autotaggingextension.onMenuItemCommand(event);"/>
+  </menupopup>
+  <toolbarpalette id="BrowserToolbarPalette">
+  <toolbarbutton id="autotaggingextension-toolbar-button"
+    label="&autotaggingextensionToolbar.label;"
+    tooltiptext="&autotaggingextensionToolbar.tooltip;"
+    oncommand="openAutoTaggingDialog()"
+    class="toolbarbutton-1 chromeclass-toolbar-additional"/>
+  </toolbarpalette>
+</overlay>
+

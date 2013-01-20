@@ -1,0 +1,5 @@
+<!ENTITY autotaggingextension.label "メニュー">
+<!ENTITY autotaggingextensionToolbar.label "自動タグ付けボタン">
+<!ENTITY autotaggingextensionToolbar.tooltip "自動タグ付けボタン">
+<!ENTITY autotaggingextensionWizard.label "設定用ウィザード">
+<!ENTITY autotaggingextensionWizard.tooltip "設定用ウィザード">

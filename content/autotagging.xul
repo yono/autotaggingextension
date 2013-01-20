@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+<!DOCTYPE prefwindow SYSTEM "chrome://autotaggingextension/locale/prefwindow.dtd">
+<window id="genericAbout"
+	title="&autotaggingextension.autotagging.title;"
+	chromehidden="menubar toolbar location directories status extrachrome"
+	xmlns:em="http://www.mozilla.org/2004/em-rdf#"
+	xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+	buttons="accept,cansel"
+	width="700"
+	height="200"
+	onload="init();">
+<script language="javascript" src="jquery.js"/>
+<script language="javascript" src="xmlhttp.js"/>
+<script languate="javascript" src="wsse.js"/>
+<script type="text/javascript"><![CDATA[
+	var href;
+	var title;
+	var date = "";
+	var server_url = "http://nemo.nal.ie.u-ryukyu.ac.jp"
+	var prefManager = Components.classes["@mozilla.org/preferences-service;1"].getService(Components.interfaces.nsIPrefBranch);
+	
+	function ZeroFormat(num,max){
+		var tmp=''+num;
+		while(tmp.length<max){
+			tmp='0'+tmp;
+		}
+		return tmp;	
+	}
+	
+	function init() {
+		var focusedWindow = window.arguments[0];
+		href = focusedWindow.location.href;
+		title = focusedWindow.document.title;
+		document.getElementById("url_txt").setAttribute('value',href);
+		document.getElementById("name_txt").setAttribute('value',title);
+		var service = prefManager.getCharPref('extensions.autotaggingextension.servicepref');
+		if (prefManager.getBoolPref('extensions.autotaggingextension.datetagpref') == true) {
+        	var now			= new Date();
+        	var nowDate		= now.getDate();
+        	var nowMonth    = now.getMonth() + 1;
+        	var nowYear		= now.getFullYear();    
+        	var arrMonthTable   = new Array('Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec');
+        	a = ''+now.getFullYear();
+        	date += a
+        	b = ' '+arrMonthTable[now.getMonth()];
+        	date += b
+        	c = ' '+ZeroFormat(nowDate,2)+' ';
+        	date += c
+		}
+		autoTagging();
+	}
+	
+	function autoTagging()
+    {
+    	var httpObj = createXMLHttpRequest();
+    	var extensionuser = prefManager.getCharPref('extensions.autotaggingextension.extensionuser');
+        if (httpObj)
+        {
+            httpObj.open("GET",
+            server_url+"/~yono/auto-tagging/autotagging-client.cgi?url="+href+"&user="+extensionuser,true);
+            httpObj.onreadystatechange = function() {
+            	if (httpObj.readyState == 4) {
+            		displayTags(httpObj.responseXML);
+            	}
+            }
+            httpObj.send(null);
+        }
+
+    }
+	 
+	function displayTags(xml)
+    {	
+        var textField = document.getElementById("tags_txt");
+        var listTags = xml.getElementsByTagName("tag");
+        var allTag = date;
+        for ( var i=0; listTags[i]!=null; i++ ) {
+            allTag += listTags[i].childNodes[0].nodeValue;
+           	allTag += " ";
+        }
+        textField.removeAttribute('disabled');
+        textField.setAttribute('value',allTag);
+    }
+
+	function sendPost()
+	{
+		var del = prefManager.getBoolPref('extensions.autotaggingextension.delicious.validation');
+		if (del == true) {
+			sendPostToDelicious();
+		}
+		var hatena = prefManager.getBoolPref('extensions.autotaggingextension.hatena.validation');
+		if (hatena == true) {
+			sendPostToHatena();
+		}
+		
+		sendFeedback();	
+		close();	
+	}
+
+	function sendPostToDelicious()
+	{
+		var textField = document.getElementById("tags_txt");
+		var tags = textField.getAttribute('value');
+		var httpObj = createXMLHttpRequest();
+		var username = prefManager.getCharPref('extensions.autotaggingextension.delicious.usernamepref');
+		var password = prefManager.getCharPref('extensions.autotaggingextension.delicious.passwordpref');
+		var encodeParam = "url="+encodeURIComponent(href)+"&description="+encodeURIComponent(title)+"&tags="+encodeURIComponent(tags);
+		if (httpObj)
+		{
+			httpObj.open("POST","https://api.del.icio.us/v1/posts/add?"+encodeParam,true,username,password);
+			//httpObj.setRequestHeader("Content-Type" , "application/x-www-form-urlencoded");
+			httpObj.onreadystatechange = function() {
+				if (httpObj.readyState == 4) {
+					//close();
+				}
+			}
+			httpObj.send(null);
+		}
+	}
+	
+	function sendPostToHatena()
+	{
+		var textField = document.getElementById("tags_txt");
+		var tags = textField.getAttribute('value');
+		var tagList = tags.split(" ");
+		var note = "";
+		for (var i=0; i<tagList.length; i++) {
+			if (tagList[i] != "") {
+				tagList[i] = "[" + tagList[i] + "]";
+				note += tagList[i];
+			}
+		}
+		username = prefManager.getCharPref('extensions.autotaggingextension.hatena.usernamepref');
+		password = prefManager.getCharPref('extensions.autotaggingextension.hatena.passwordpref');
+
+		var w = wsseHeader(username, password);
+		var xml = "<?xml version=\"1.0\" encoding=\"utf-8\"?><entry xmlns=\"http://purl.org/atom/ns#\">";
+		xml += "<title>";
+		xml += title;
+		xml += "</title>";
+		xml += " <link rel=\"related\" type=\"text/html\" href=\"";
+		xml += href;
+		xml += "\" />";
+		xml += "<summary type=\"text/plain\">";
+		xml += note;
+		xml += "</summary></entry>";
+
+		var httpObj = createXMLHttpRequest();
+		if (httpObj)
+		{
+			httpObj.open("POST","http://b.hatena.ne.jp/atom/post",true,username,password);
+			httpObj.setRequestHeader("X-WSSE" , w);
+			httpObj.onreadystatechange = function() {
+				if (httpObj.readyState == 4) {
+					//close();
+				}
+			}
+			httpObj.send(xml);
+		}		
+	}
+	
+	function sendFeedback() {
+		var textField = document.getElementById("tags_txt");
+		var tags = textField.inputField.value;
+		var tagList = tags.split(" ");
+		var tagTxt = "";
+		for (var i=0; i<tagList.length; i++) {
+			if (tagList[i] != "") {
+				tagTxt += tagList[i];
+				tagTxt += ","
+			}
+		}
+		var url  = document.getElementById("url_txt").getAttribute("value");
+		var httpObj = createXMLHttpRequest();
+    	var extensionuser = prefManager.getCharPref('extensions.autotaggingextension.extensionuser');
+        if (httpObj)
+        {
+            httpObj.open("GET",server_url+"/~yono/auto-tagging/save-feedback.cgi?url="+url+"&user="+extensionuser+"&tags="+tagTxt,true);
+            httpObj.onreadystatechange = function() {
+            	if (httpObj.readyState == 4) {
+            		//displayTags(httpObj.responseXML);
+            	}
+            }
+            httpObj.send(null);
+        }
+	}
+	
+]]></script>
+<grid>
+    <rows>
+    <row>
+        <spacer flxe="1"/>
+        <label id="url_label" class="good" value="URL:" control="url_txt"/>
+         <textbox id="url_txt" size="80"/>
+    </row>
+    <row>
+        <spacer flxe="1"/>
+        <label id="name_label" class="good" value="Name:" control="name_txt"/>
+        <textbox id="name_txt" size="80"/>
+    </row>
+    <row>
+        <spacer flxe="1"/>
+        <label id="note_label" class="good" value="Note:" control="note_txt"/>
+        <textbox id="note_txt" size="80"/>
+    </row>
+    <row>
+        <spacer flxe="1"/>
+        <label id="tags_label" class="good" value="Tags:" control="tags_txt"/>
+        <textbox id="tags_txt" size="80" disabled="true" value="&autotaggingextension.autotagging.loading;"/>
+    </row>
+    </rows>
+</grid>
+	<hbox>
+		<spacer flex="1"/>
+		<button label="Cancel" oncommand="close();"/>
+		<button label="OK" oncommand="sendPost();"/>
+	</hbox>
+</window>

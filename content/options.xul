@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+<!DOCTYPE prefwindow SYSTEM "chrome://autotaggingextension/locale/prefwindow.dtd">
+<prefwindow id="autotaggingextensionPreferences" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" xmlns:html="http://www.w3.org/1999/xhtml" title="&prefwindow.title;" >
+  <preferences>
+    <preference id="deliciousvalid" name="extensions.autotaggingextension.delicious.validation" type="bool"/>
+    <preference id="delicioususer"  name="extensions.autotaggingextension.delicious.usernamepref" type="string"/>
+    <preference id="deliciouspass"  name="extensions.autotaggingextension.delicious.passwordpref" type="string"/>
+    <preference id="hatenavalid"    name="extensions.autotaggingextension.hatena.validation" type="bool"/>
+    <preference id="hatenauser"     name="extensions.autotaggingextension.hatena.usernamepref" type="string"/>
+    <preference id="hatenapass"     name="extensions.autotaggingextension.hatena.passwordpref" type="string"/> 
+    <preference id="datetag"        name="extensions.autotaggingextension.datetagpref"  type="bool"/>
+    <preference id="extensionuser"  name="extensions.autotaggingextension.extensionuser" type="string"/>
+  </preferences>
+  <script src="openAutoTagging.js"/>
+  <prefpane id="pane1" label="&pane1.title;">
+  <grid flex="1">
+  <columns>
+    <column flex="2"/>
+    <column flex="1"/>
+    <column flex="1"/>
+  </columns>
+
+  <rows>
+    <row>
+    	<label>&validationpref.label;</label>
+    	<label accesskey="&servicepref.accesskey;" control="servicepref">&servicepref.label;</label>
+    	<label>&usernamepref.label;</label>
+    	<label>&passwordpref.label;</label>
+    </row>
+    <row>
+    	<checkbox id="deliciousvalidpref" preference="deliciousvalid"/>
+  		<label>&servicepref.delicious;</label>
+  		<textbox id="delicious_usernamepref" preference="delicioususer"/>
+  		<textbox id="delicious_passwordpref" preference="deliciouspass" type="password"/>
+    </row>
+    <row>
+  		<checkbox id="hatenavalidpref" preference="hatenavalid"/>
+  		<label>&servicepref.hatena;</label>
+  		<textbox id="hatena_usernamepref" preference="hatenauser"/>
+  		<textbox id="hatena_passwordpref" preference="hatenapass" type="password"/>    	
+    </row>
+  </rows>
+  </grid>
+  <html:hr/>
+  <hbox>
+  	<label accesskey="&extensionuserpref.accesskey;" control="extensionuserpref">&extensionuserpref.label;</label>
+  	<textbox id="extensionuserpref" preference="extensionuser" size="32"/>
+  </hbox>
+  <html:hr/>
+  <hbox>
+  	<button label="open the initialization wizard" oncommand="openWizard();"/>
+  </hbox>
+  <html:hr/>
+  <hbox>
+    <label accesskey="&datetagpref.accesskey;" control="datetagpref">&datetagpref.label;</label>
+    <checkbox id="datetagpref" preference="datetag"/>
+  </hbox>
+  </prefpane>
+</prefwindow>

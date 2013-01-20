@@ -1,0 +1,26 @@
+<!ENTITY wizardwindow.title "初期設定">
+<!ENTITY pane1.title "初期設定">
+<!ENTITY usernamepref.label "ユーザー名">
+<!ENTITY usernamepref.accesskey "U">
+<!ENTITY passwordpref.label "パスワード">
+<!ENTITY passwordpref.accesskey "P">
+<!ENTITY servicepref.label "ソーシャルブックマークサービス">
+<!ENTITY servicepref.accesskey "S">
+<!ENTITY servicepref.delicious "del.icio.us">
+<!ENTITY servicepref.hatena "はてなブックマーク">
+<!ENTITY datetagpref.label "日付タグ">
+<!ENTITY datetagpref.accesskey "D">
+<!ENTITY validationpref.label "有効化">
+
+<!ENTITY wizardwindow.wizard-start.desp1 "この拡張機能は以下のサービスをサポートしています。">
+<!ENTITY wizardwindow.wizard-start.desp2 "利用するサービスを選択してください。">
+<!ENTITY wizardwindow.wizard-start.desp3 "上記サービスへの登録がまだの場合">
+<!ENTITY wizardwindow.wizard-start.gotodelicious "del.icio.usのユーザー登録を行う">
+<!ENTITY wizardwindow.wizard-start.gotohatena "はてなブックマークのユーザー登録を行う">
+<!ENTITY wizardwindow.select-prelearning.desp1 " 既に登録済みのブックマークがある場合、それを利用することでより快適に本拡張機能を利用することができます。">
+<!ENTITY wizardwindow.select-prelearning.desp2 "下記のうちいずれかを選択してください。">
+<!ENTITY wizardwindow.select-prelearning.option-yes "登録済みブックマークを利用する">
+<!ENTITY wizardwindow.select-prelearning.option-no "登録済みブックマークを利用しない">
+<!ENTITY wizardwindow.no.desp1 " あなたがタグ付けに利用するキーワードを入力してください。">
+<!ENTITY wizardwindow.no.desp2 "複数入力する場合、カンマ（,）で区切ってください。">
+<!ENTITY wizardwindow.wizard-end.desp1 "初期設定は終了しました。「完了」を押してウィンドウを閉じてください。">

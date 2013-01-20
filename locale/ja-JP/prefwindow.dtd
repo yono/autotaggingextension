@@ -1,0 +1,18 @@
+<!ENTITY prefwindow.title "自動タグ付け 設定">
+<!ENTITY pane1.title "自動タグ付け 設定">
+<!ENTITY usernamepref.label "ユーザー名">
+<!ENTITY usernamepref.accesskey "U">
+<!ENTITY passwordpref.label "パスワード">
+<!ENTITY passwordpref.accesskey "P">
+<!ENTITY servicepref.label "ソーシャルブックマークサービス">
+<!ENTITY servicepref.accesskey "S">
+<!ENTITY servicepref.delicious "del.icio.us">
+<!ENTITY servicepref.hatena "はてなブックマーク">
+<!ENTITY datetagpref.label "日付タグを追加">
+<!ENTITY datetagpref.accesskey "D">
+<!ENTITY validationpref.label "有効化">
+<!ENTITY extensionuserpref.accesskey "E">
+<!ENTITY extensionuserpref.label "認証用ID">
+
+<!ENTITY autotaggingextension.autotagging.title "自動タグ付け">
+<!ENTITY autotaggingextension.autotagging.loading "読み込み中">

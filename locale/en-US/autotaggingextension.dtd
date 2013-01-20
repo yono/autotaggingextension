@@ -1,0 +1,5 @@
+<!ENTITY autotaggingextension.label "menuitem">
+<!ENTITY autotaggingextensionToolbar.label "AutoTagging Button">
+<!ENTITY autotaggingextensionToolbar.tooltip "Auto tagging button!">
+<!ENTITY autotaggingextensionWizard.label "Setting Wizard">
+<!ENTITY autotaggingextensionWizard.tooltip "Setting Wizard">

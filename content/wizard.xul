@@ -1,0 +1,40 @@
+<?xml version="1.0"?><?xml-stylesheet href="chrome://global/skin/" type="text/css"?><!DOCTYPE wizardwindow SYSTEM "chrome://autotaggingextension/locale/wizardwindow.dtd"><wizard id="example-window" title="&wizardwindow.title;"    xmlns:html="http://www.w3.org/1999/xhtml"  height="400"  width="500"  xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">    <script language="javascript" src="xmlhttp.js"/>
+  <script language="javascript" src="md5.js"/>  <script type="text/javascript"><![CDATA[
+  	var prefManager = Components.classes["@mozilla.org/preferences-service;1"].getService(Components.interfaces.nsIPrefBranch);    var service = 1;
+    var server_url = "http://nemo.nal.ie.u-ryukyu.ac.jp"
+    var serviceArray = new Array("","delicious","hatena");    function selectService(selectedService){		service = selectedService;    }
+    
+    function sendPrelearningRequest(){
+    	// set pref
+    	var user = document.getElementById('username').value;
+    	var password = document.getElementById('password').value;
+    	var mailaddress = document.getElementById('mailaddress').value;
+    	var extensionuser = prefManager.getCharPref('extensions.autotaggingextension.extensionuser');
+    	
+    	if (service == 1) {
+    		prefManager.setCharPref('extensions.autotaggingextension.delicious.usernamepref',user);
+    		prefManager.setCharPref('extensions.autotaggingextension.delicious.passwordpref',password);
+    		prefManager.setBoolPref('extensions.autotaggingextension.delicious.validation',true);
+    	}else if (service == 2) {
+    		prefManager.setCharPref('extensions.autotaggingextension.hatena.usernamepref',user);
+    		prefManager.setCharPref('extensions.autotaggingextension.hatena.passwordpref',password);
+    		prefManager.setBoolPref('extensions.autotaggingextension.hatena.validation',true);
+    	}
+    	
+    	var httpObj = createXMLHttpRequest();
+        if (httpObj)
+        {
+            httpObj.open("GET",
+            server_url+/~yono/auto-tagging/prelearning-client.cgi?service="+serviceArray[service]+"&user="+user+"&mailaddress="+mailaddress,true);
+            httpObj.onreadystatechange = function() {
+            	if (httpObj.readyState == 4) {
+            		var data = httpObj.responseXML.getElementsByTagName("data").item(0).firstChild.data;
+            		alert(data);
+            		prefManager.setCharPref('extensions.autotaggingextension.extensionuser',data);
+            	}
+            }
+            httpObj.send(null);
+        }
+    }  ]]></script>    <wizardpage id="wizard-start" pageid="start" next="select-prelearning">    <description>    &wizardwindow.wizard-start.desp1;      <html:ul>      	<html:li>&servicepref.delicious;</html:li>      	<html:li>&servicepref.hatena;</html:li>      </html:ul>      &wizardwindow.wizard-start.desp2;    </description>    <menulist id="service" oncommand="selectService(this.selectedItem.value);">	  <menupopup>	    <menuitem label="&servicepref.delicious;" value="1" selected="true"/>	    <menuitem label="&servicepref.hatena;" value="2"/>	  </menupopup>  	</menulist>     <label control="username">&usernamepref.label;</label><textbox id="username"/>    <label control="password">&passwordpref.label;</label><textbox id="password" type="password"/>    <spacer/>    <label>&wizardwindow.wizard-start.desp3;</label>    <html:ul>     <html:li>     <label href="https://secure.del.icio.us/register" class="text-link" value="&wizardwindow.wizard-start.gotodelicious;"/>     </html:li>     <html:li>     <label href="https://www.hatena.ne.jp/register?location=http%3A%2F%2Fb.hatena.ne.jp%2F" class="text-link" value="&wizardwindow.wizard-start.gotohatena;"/>     </html:li>    </html:ul>
+    <label control="mailaddress">e-mail address</label><textbox id="mailaddress"/>      </wizardpage>    <wizardpage id="prelearning" pageid="select-prelearning" next="yes">  <description id="txt">  &wizardwindow.select-prelearning.desp1;  &wizardwindow.select-prelearning.desp2;  </description>      <radiogroup onselect="document.getElementById('prelearning').next = this.selectedItem.value;">      <radio value="yes" label="&wizardwindow.select-prelearning.option-yes;" selected="true"/>      <radio value="no" label="&wizardwindow.select-prelearning.option-no;" />    </radiogroup>  </wizardpage>    <wizardpage pageid="yes" onpageshow="sendPrelearningRequest();">  <description>	&wizardwindow.wizard-end.desp1;
+  </description>  </wizardpage>    <wizardpage pageid="no" next="no-next">  <description>    &wizardwindow.no.desp1;    &wizardwindow.no.desp2;  <textbox size="40"/>  </description>  </wizardpage>    <wizardpage pageid="no-next">  <description>	&wizardwindow.wizard-end.desp1;  </description>  </wizardpage></wizard>

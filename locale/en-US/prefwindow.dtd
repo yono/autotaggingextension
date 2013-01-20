@@ -1,0 +1,18 @@
+<!ENTITY prefwindow.title "Auto Tagging Extension preferences">
+<!ENTITY pane1.title "Auto Tagging Extension preferences">
+<!ENTITY usernamepref.label "Username">
+<!ENTITY usernamepref.accesskey "U">
+<!ENTITY passwordpref.label "Password">
+<!ENTITY passwordpref.accesskey "P">
+<!ENTITY servicepref.label "Social Bookmark Service">
+<!ENTITY servicepref.accesskey "S">
+<!ENTITY servicepref.delicious "del.icio.us">
+<!ENTITY servicepref.hatena "Hatena Bookmark">
+<!ENTITY datetagpref.label "Add date tags">
+<!ENTITY datetagpref.accesskey "D">
+<!ENTITY validationpref.label "Validation">
+<!ENTITY extensionuserpref.accesskey "E">
+<!ENTITY extensionuserpref.label "Id for authentication">
+
+<!ENTITY autotaggingextension.autotagging.title "Auto Tagging">
+<!ENTITY autotaggingextension.autotagging.loading "Loading">

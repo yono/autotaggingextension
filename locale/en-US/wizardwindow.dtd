@@ -1,0 +1,26 @@
+<!ENTITY wizardwindow.title "Initialization">
+<!ENTITY pane1.title "Initialization">
+<!ENTITY usernamepref.label "Username">
+<!ENTITY usernamepref.accesskey "U">
+<!ENTITY passwordpref.label "Password">
+<!ENTITY passwordpref.accesskey "P">
+<!ENTITY servicepref.label "Social Bookmark Service">
+<!ENTITY servicepref.accesskey "S">
+<!ENTITY servicepref.delicious "del.icio.us">
+<!ENTITY servicepref.hatena "Hatena Bookmark">
+<!ENTITY datetagpref.label "datetag">
+<!ENTITY datetagpref.accesskey "D">
+<!ENTITY validationpref.label "Validation">
+
+<!ENTITY wizardwindow.wizard-start.desp1 "This extension supports following services.">
+<!ENTITY wizardwindow.wizard-start.desp2 "Please select a service that you will use.">
+<!ENTITY wizardwindow.wizard-start.desp3 "If you don't have these service's account yet">
+<!ENTITY wizardwindow.wizard-start.gotodelicious "go to del.icio.us">
+<!ENTITY wizardwindow.wizard-start.gotohatena "go to Hatena Bookmark">
+<!ENTITY wizardwindow.select-prelearning.desp1 "If you have registered bookmarks on the service, it makes more confortable this extension.">
+<!ENTITY wizardwindow.select-prelearning.desp2 "Please select any one in following options.">
+<!ENTITY wizardwindow.select-prelearning.option-yes "use the registered bookmarks">
+<!ENTITY wizardwindow.select-prelearning.option-no "don't use the registered bookmarks">
+<!ENTITY wizardwindow.no.desp1 "Please input keywords that you use for tagging.">
+<!ENTITY wizardwindow.no.desp2 "Please set apart each word by a comma.">
+<!ENTITY wizardwindow.wizard-end.desp1 "Initilization is finished. Please close this window to click 'Done'.">

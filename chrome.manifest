@@ -1,0 +1,6 @@
+content	autotaggingextension	content/
+locale	autotaggingextension	ja-JP	locale/ja-JP/
+locale	autotaggingextension	en-US	locale/en-US/
+skin	autotaggingextension	classic/1.0	skin/
+overlay	chrome://browser/content/browser.xul	chrome://autotaggingextension/content/firefoxOverlay.xul
+style	chrome://global/content/customizeToolbar.xul	chrome://autotaggingextension/skin/overlay.css
